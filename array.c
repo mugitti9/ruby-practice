@@ -8075,6 +8075,16 @@ finish_exact_sum(long n, VALUE r, VALUE v, int z)
     return v;
 }
 
+static VALUE
+rb_ary_second(VALUE ary)
+{
+    long len = RARRAY_LEN(ary);
+    if (len < 2) {
+      rb_raise(rb_eIndexError, "array size is %ld", len);
+    }
+    return RARRAY_AREF(ary, 1);
+}
+
 /*
  * call-seq:
  *   sum(init = 0) -> object
@@ -8770,6 +8780,7 @@ Init_Array(void)
 
     rb_define_method(rb_cArray, "[]", rb_ary_aref, -1);
     rb_define_method(rb_cArray, "[]=", rb_ary_aset, -1);
+    rb_define_method(rb_cArray, "second", rb_ary_second, 0);
     rb_define_method(rb_cArray, "at", rb_ary_at, 1);
     rb_define_method(rb_cArray, "fetch", rb_ary_fetch, -1);
     rb_define_method(rb_cArray, "concat", rb_ary_concat_multi, -1);
